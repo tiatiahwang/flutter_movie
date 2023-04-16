@@ -55,7 +55,9 @@ class HomeScreen extends StatelessWidget {
                         itemCount: snapshot.data!.length,
                       );
                     }
-                    return const Text('NO');
+                    return const Center(
+                      child: CircularProgressIndicator(),
+                    );
                   },
                 ),
               ),
@@ -92,7 +94,9 @@ class HomeScreen extends StatelessWidget {
                         itemCount: snapshot.data!.length,
                       );
                     }
-                    return const Text('NO');
+                    return const Center(
+                      child: CircularProgressIndicator(),
+                    );
                   },
                 ),
               ),
@@ -129,7 +133,9 @@ class HomeScreen extends StatelessWidget {
                         itemCount: snapshot.data!.length,
                       );
                     }
-                    return const Text('NO');
+                    return const Center(
+                      child: CircularProgressIndicator(),
+                    );
                   },
                 ),
               ),

@@ -147,7 +147,9 @@ class _DetailScreenState extends State<DetailScreen> {
                             ],
                           );
                         }
-                        return const Text('..');
+                        return const Center(
+                          child: CircularProgressIndicator(),
+                        );
                       },
                     ),
                   ],
