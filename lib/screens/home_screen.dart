@@ -16,63 +16,64 @@ class HomeScreen extends StatelessWidget {
         elevation: 0,
       ),
       body: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 10),
-        child: FutureBuilder(
-          future: populars,
-          builder: (context, snapshot) {
-            if (snapshot.hasData) {
-              return Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  const SizedBox(height: 20),
-                  const Text(
-                    'Popular Movies',
-                    style: TextStyle(
-                      fontSize: 24,
-                      fontWeight: FontWeight.w800,
-                    ),
-                  ),
-                  const SizedBox(height: 20),
-                  Expanded(
-                    child: makePopularList(snapshot),
-                  )
-                ],
-              );
-            }
-            return const Center(
-              child: CircularProgressIndicator(),
-            );
-          },
-        ),
-      ),
-    );
-  }
-
-  ListView makePopularList(AsyncSnapshot<List<MovieModel>> snapshot) {
-    return ListView.separated(
-      scrollDirection: Axis.horizontal,
-      itemCount: snapshot.data!.length,
-      itemBuilder: (context, index) {
-        var popular = snapshot.data![index];
-        var posterUrl = 'https://image.tmdb.org/t/p/w500/${popular.poster}';
-        return Column(
+        padding: const EdgeInsets.symmetric(horizontal: 20),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Container(
-              width: 300,
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(10),
-              ),
-              clipBehavior: Clip.hardEdge,
-              child: Image.network(
-                posterUrl,
-                height: 200,
-                fit: BoxFit.fill,
+            const Text(
+              'Popular Movies',
+              style: TextStyle(
+                fontSize: 24,
+                fontWeight: FontWeight.bold,
               ),
             ),
+            const SizedBox(height: 20),
+            SizedBox(
+              height: 220,
+              child: FutureBuilder(
+                future: populars,
+                builder: (context, snapshot) {
+                  if (snapshot.hasData) {
+                    return ListView.separated(
+                      scrollDirection: Axis.horizontal,
+                      itemBuilder: (context, index) {
+                        var movie = snapshot.data![index];
+                        var url =
+                            'https://image.tmdb.org/t/p/w500/${movie.poster}';
+                        return Container(
+                          width: 300,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(10),
+                          ),
+                          clipBehavior: Clip.hardEdge,
+                          child: Image.network(
+                            url,
+                            // height: 200,
+                            fit: BoxFit.fill,
+                          ),
+                        );
+                      },
+                      separatorBuilder: (context, index) =>
+                          const SizedBox(width: 20),
+                      itemCount: snapshot.data!.length,
+                    );
+                  }
+                  return const Text('NO');
+                },
+              ),
+            ),
+            const SizedBox(height: 20),
+            const Text(
+              'Now in Cinemas',
+              style: TextStyle(
+                fontSize: 24,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+            const SizedBox(height: 20),
           ],
-        );
-      },
-      separatorBuilder: (context, index) => const SizedBox(width: 20),
+        ),
+      ),
     );
   }
 }

@@ -5,5 +5,5 @@ class MovieModel {
   MovieModel.fromJson(Map<String, dynamic> json)
       : id = json['id'],
         title = json['title'],
-        poster = json['backdrop_path'] ?? ' ';
+        poster = json['backdrop_path'] ?? 'NO';
 }
