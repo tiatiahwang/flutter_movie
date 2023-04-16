@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_movie/models/movie_model.dart';
+import 'package:flutter_movie/screens/detail_screen.dart';
 import 'package:flutter_movie/services/api_service.dart';
 
 class HomeScreen extends StatelessWidget {
@@ -43,17 +44,10 @@ class HomeScreen extends StatelessWidget {
                           var movie = snapshot.data![index];
                           var url =
                               'https://image.tmdb.org/t/p/w500/${movie.poster}';
-                          return Container(
-                            width: 300,
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(10),
-                            ),
-                            clipBehavior: Clip.hardEdge,
-                            child: Image.network(
-                              url,
-                              // height: 200,
-                              fit: BoxFit.fill,
-                            ),
+                          return PopularMovies(
+                            url: url,
+                            id: movie.id,
+                            bg: movie.bg,
                           );
                         },
                         separatorBuilder: (context, index) =>
@@ -203,6 +197,49 @@ class HomeScreen extends StatelessWidget {
               const SizedBox(height: 20),
             ],
           ),
+        ),
+      ),
+    );
+  }
+}
+
+class PopularMovies extends StatelessWidget {
+  final String bg;
+  final int id;
+
+  const PopularMovies({
+    super.key,
+    required this.url,
+    required this.bg,
+    required this.id,
+  });
+
+  final String url;
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTap: () {
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => DetailScreen(
+              bg: bg,
+              id: id,
+            ),
+          ),
+        );
+      },
+      child: Container(
+        width: 300,
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(10),
+        ),
+        clipBehavior: Clip.hardEdge,
+        child: Image.network(
+          url,
+          // height: 200,
+          fit: BoxFit.fill,
         ),
       ),
     );
