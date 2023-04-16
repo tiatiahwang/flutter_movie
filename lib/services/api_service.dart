@@ -27,4 +27,18 @@ class ApiService {
     }
     throw Error();
   }
+
+  static Future<List<MovieModel>> getNowPlayings() async {
+    List<MovieModel> nowPlayings = [];
+    final url = Uri.parse('$baseURL/$nowPlaying');
+    final response = await http.get(url);
+    if (response.statusCode == 200) {
+      final movies = jsonDecode(response.body)["results"];
+      for (var movie in movies) {
+        nowPlayings.add(MovieModel.fromJson(movie));
+      }
+      return nowPlayings;
+    }
+    throw Error();
+  }
 }
