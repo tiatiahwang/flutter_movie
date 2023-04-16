@@ -80,40 +80,11 @@ class HomeScreen extends StatelessWidget {
                           var movie = snapshot.data![index];
                           var url =
                               'https://image.tmdb.org/t/p/w500/${movie.poster}';
-                          return Column(
-                            children: [
-                              Container(
-                                width: 150,
-                                height: 200,
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(10),
-                                ),
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Container(
-                                      decoration: BoxDecoration(
-                                        borderRadius: BorderRadius.circular(10),
-                                      ),
-                                      clipBehavior: Clip.hardEdge,
-                                      child: Image.network(
-                                        url,
-                                        height: 150,
-                                        fit: BoxFit.fill,
-                                      ),
-                                    ),
-                                    const SizedBox(height: 10),
-                                    Text(
-                                      movie.title,
-                                      style: const TextStyle(
-                                        fontSize: 14,
-                                        fontWeight: FontWeight.bold,
-                                      ),
-                                    )
-                                  ],
-                                ),
-                              ),
-                            ],
+                          return NowPlayingMovies(
+                            url: url,
+                            title: movie.title,
+                            id: movie.id,
+                            bg: movie.bg,
                           );
                         },
                         separatorBuilder: (context, index) =>
@@ -146,43 +117,11 @@ class HomeScreen extends StatelessWidget {
                           var movie = snapshot.data![index];
                           var url =
                               'https://image.tmdb.org/t/p/w500/${movie.poster}';
-                          return Column(
-                            children: [
-                              Container(
-                                width: 150,
-                                height: 220,
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(10),
-                                ),
-                                // clipBehavior: Clip.hardEdge,
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Container(
-                                      decoration: BoxDecoration(
-                                        borderRadius: BorderRadius.circular(10),
-                                      ),
-                                      clipBehavior: Clip.hardEdge,
-                                      child: Image.network(
-                                        url,
-                                        height: 150,
-                                        fit: BoxFit.fill,
-                                      ),
-                                    ),
-                                    const SizedBox(height: 10),
-                                    Expanded(
-                                      child: Text(
-                                        movie.title,
-                                        style: const TextStyle(
-                                          fontSize: 14,
-                                          fontWeight: FontWeight.bold,
-                                        ),
-                                      ),
-                                    )
-                                  ],
-                                ),
-                              ),
-                            ],
+                          return ComnigSoonMovies(
+                            url: url,
+                            title: movie.title,
+                            id: movie.id,
+                            bg: movie.bg,
                           );
                         },
                         separatorBuilder: (context, index) =>
@@ -198,6 +137,139 @@ class HomeScreen extends StatelessWidget {
             ],
           ),
         ),
+      ),
+    );
+  }
+}
+
+class ComnigSoonMovies extends StatelessWidget {
+  final String url, bg, title;
+  final int id;
+
+  const ComnigSoonMovies({
+    super.key,
+    required this.url,
+    required this.bg,
+    required this.title,
+    required this.id,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTap: () {
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => DetailScreen(
+              bg: bg,
+              id: id,
+            ),
+          ),
+        );
+      },
+      child: Column(
+        children: [
+          Container(
+            width: 150,
+            height: 220,
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(10),
+            ),
+            // clipBehavior: Clip.hardEdge,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Container(
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                  clipBehavior: Clip.hardEdge,
+                  child: Image.network(
+                    url,
+                    height: 150,
+                    fit: BoxFit.fill,
+                  ),
+                ),
+                const SizedBox(height: 10),
+                Expanded(
+                  child: Text(
+                    title,
+                    style: const TextStyle(
+                      fontSize: 14,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                )
+              ],
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class NowPlayingMovies extends StatelessWidget {
+  final String url, bg, title;
+  final int id;
+
+  const NowPlayingMovies({
+    super.key,
+    required this.url,
+    required this.bg,
+    required this.title,
+    required this.id,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTap: () {
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => DetailScreen(
+              bg: bg,
+              id: id,
+            ),
+          ),
+        );
+      },
+      child: Column(
+        children: [
+          Container(
+            width: 150,
+            height: 200,
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(10),
+            ),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Container(
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                  clipBehavior: Clip.hardEdge,
+                  child: Image.network(
+                    url,
+                    height: 150,
+                    fit: BoxFit.fill,
+                  ),
+                ),
+                const SizedBox(height: 10),
+                Text(
+                  title,
+                  style: const TextStyle(
+                    fontSize: 14,
+                    fontWeight: FontWeight.bold,
+                  ),
+                )
+              ],
+            ),
+          ),
+        ],
       ),
     );
   }
