@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_movie/models/movie_detail_model.dart';
 import 'package:flutter_movie/services/api_service.dart';
+import 'package:url_launcher/url_launcher_string.dart';
 
 class DetailScreen extends StatefulWidget {
   final String bg;
@@ -23,6 +24,10 @@ class _DetailScreenState extends State<DetailScreen> {
   void initState() {
     super.initState();
     movie = ApiService.getMovieById(widget.id);
+  }
+
+  onButtonTap(String url) async {
+    await launchUrlString(url);
   }
 
   @override
@@ -119,6 +124,26 @@ class _DetailScreenState extends State<DetailScreen> {
                                   color: Colors.white,
                                 ),
                               ),
+                              const SizedBox(height: 40),
+                              GestureDetector(
+                                onTap: () => onButtonTap(snapshot.data!.url),
+                                child: Center(
+                                  child: Container(
+                                    padding: const EdgeInsets.symmetric(
+                                      horizontal: 80,
+                                      vertical: 15,
+                                    ),
+                                    decoration: BoxDecoration(
+                                      color: Colors.yellow,
+                                      borderRadius: BorderRadius.circular(10),
+                                    ),
+                                    child: const Text('Buy ticket',
+                                        style: TextStyle(
+                                          fontWeight: FontWeight.bold,
+                                        )),
+                                  ),
+                                ),
+                              )
                             ],
                           );
                         }
