@@ -41,4 +41,18 @@ class ApiService {
     }
     throw Error();
   }
+
+  static Future<List<MovieModel>> getComingSoon() async {
+    List<MovieModel> comingSoons = [];
+    final url = Uri.parse('$baseURL/$comingSoon');
+    final response = await http.get(url);
+    if (response.statusCode == 200) {
+      final movies = jsonDecode(response.body)["results"];
+      for (var movie in movies) {
+        comingSoons.add(MovieModel.fromJson(movie));
+      }
+      return comingSoons;
+    }
+    throw Error();
+  }
 }
